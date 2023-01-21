@@ -196,10 +196,10 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.__init__" />
+      <item itemvalue="Python.website" />
       <item itemvalue="Python.models" />
       <item itemvalue="Python.routes" />
-      <item itemvalue="Python.website" />
+      <item itemvalue="Python.__init__" />
       <item itemvalue="Python tests.Unittests for tests.UserModelCase" />
       <item itemvalue="Python tests.Unittests for tests.UserModelCase.test_password_hashing" />
     </list>
