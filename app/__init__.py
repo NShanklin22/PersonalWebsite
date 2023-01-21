@@ -4,6 +4,10 @@ from .config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
 app = Flask(__name__)
 login = LoginManager(app)
 app.config.from_object(Config)

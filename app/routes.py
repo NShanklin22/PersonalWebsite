@@ -6,10 +6,10 @@ from flask_login import logout_user
 from app import app
 from app import db
 from flask_login import current_user, login_user
-from app.models import User
+from app.models import User,Post
 from app.forms import LoginForm, RegistrationForm
 from flask_login import login_required
-from app.forms import EditProfileForm
+from app.forms import EditProfileForm,PostForm
 from datetime import  datetime
 
 @app.before_request
@@ -35,12 +35,17 @@ def edit_profile():
     return render_template('edit_profile.html', title='Edit Profile',
                            form=form)
 
-# Route for the index page
-@app.route('/')
-@app.route('/index')
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/index', methods=['GET', 'POST'])
 @login_required
 def index():
-    user = {'username': 'Miguel'}
+    form = PostForm()
+    if form.validate_on_submit():
+        post = Post(body=form.post.data, author=current_user)
+        db.session.add(post)
+        db.session.commit()
+        flash('Your post is now live!')
+        return redirect(url_for('index'))
     posts = [
         {
             'author': {'username': 'John'},
@@ -51,8 +56,8 @@ def index():
             'body': 'The Avengers movie was so cool!'
         }
     ]
-    return render_template("index.html", title='Home Page', posts=posts)
-
+    return render_template("index.html", title='Home Page', form=form,
+                           posts=posts)
 # Route for the login page
 @app.route('/login', methods=['GET', 'POST'])
 def login():
